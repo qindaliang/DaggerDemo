@@ -13,6 +13,9 @@ import com.qin.daggerdemo.R;
 import com.qin.daggerdemo.demo1.bean.Student;
 import com.qin.daggerdemo.demo1.component.DaggerStudentComponent;
 import com.qin.daggerdemo.demo1.module.StudentModule;
+import com.qin.daggerdemo.demo4.Cat;
+import com.qin.daggerdemo.demo4.CatModule;
+import com.qin.daggerdemo.demo4.DaggerCatComponent;
 
 import javax.inject.Inject;
 
@@ -21,20 +24,26 @@ public class OneActivity extends AppCompatActivity {
     @Inject
     Student mStudent;
 
+    @Inject
+    Cat mCat;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.one);
         Button btn_one = findViewById(R.id.btn_one);
-        DaggerStudentComponent.builder().studentModule(new StudentModule(this)).build().inject(this);
+        DaggerStudentComponent.builder().studentModule(new StudentModule(this)).catModule(new CatModule()).build().inject(this);
+
+
         btn_one.setOnClickListener(v -> {
             Toast.makeText(OneActivity.this, mStudent.toString(), Toast.LENGTH_SHORT).show();
 //            Logger.d(mStudent);
 ////            Logger.d("sdfsdfsdfsdfsdf");
-            Log.i("msg","sdfsdfsdfsdfsdf");
+            Log.i("msg", "sdfsdfsdfsdfsdf");
             LogUtils.i(mStudent.toString());
+            LogUtils.i(mCat.toString());
             LogUtils.createMessage(mStudent.toString());
-            LogUtils.log2File("verbose","msg" ,mStudent.toString() );
+            LogUtils.log2File("verbose", "msg", mStudent.toString());
         });
     }
 }
